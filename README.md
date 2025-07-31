@@ -1,73 +1,127 @@
-# Welcome to your Lovable project
+Product Requirement Document for Rubric Manager
 
-## Project info
+## 1. Overview
 
-**URL**: https://lovable.dev/projects/964fc3d0-5331-4a50-9dc7-549a1b600cbe
+- A website that allows users to easily search and filter rubrics by **domain, subdomain, category**, or **keyword**.
+- Users can e**dit** a rubric. These edits are **submitted to a review queue** (`/rubrics/review`) for oversight.
+- User can view the content of a patient case, and be able to add/modify case-specific criteria, and shows list of broad category criteria that apply to this case. We can also add a "auto-gen" feature on this page.
+- User can directly evaluate the LLM responses against a set of rules using our evaluation tool.
+- 
+- Will likely be deployed as a standalone app for RDs and internal use
 
-## How can I edit this code?
+## 2. Objectives
 
-There are several ways of editing your application.
+- Create and edit rubrics
+- Version control and audit trails
+- LLM Evaluation integration
+- Rubric templates and ai suggestions
+- Collaboration and review
+- Search and browse
+- Export
 
-**Use Lovable**
+## 3. User Stories
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/964fc3d0-5331-4a50-9dc7-549a1b600cbe) and start prompting.
+- As a RD/reviewer, I want to quickly browse available rubrics related to a domain, so I can apply the same standards across benchmark cases.
 
-Changes made via Lovable will be committed automatically to this repo.
+## 4. Functional Requirements
 
-**Use your preferred IDE**
+# Technical details (concerns)
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+- Should Next.js be used or can we get away with regular javascript (not even react)
+- Handling authentication, oAuth or iHealth’s in-house authentication
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+# Dashboard Integration
 
-Follow these steps:
+```jsx
+sidebar_navigation = {
+    "🏠 Home": {
+        "page": "home",
+        "submenu": None
+    },
+    "📚 Rubrics": {
+        "page": "rubrics",
+        "submenu": [
+            "Browse All",
+            "My Rubrics",
+            "Create New",
+            "Archived"
+        ]
+    },
+    "🧪 Test Cases": {
+        "page": "test_cases",
+        "submenu": [
+            "Run LLM Evaluation",
+            "Upload Case Data",
+            "Manage Test Sets"
+        ]
+    },
+    "🧠 Criteria & Logic": {
+        "page": "criteria_logic",
+        "submenu": [
+            "Rule Builder",
+            "LLM Suggestions",
+            "Versioning & Audits"
+        ]
+    },
+    "📈 Analytics": {
+        "page": "analytics",
+        "submenu": [
+            "Performance Trends",
+            "Agreement Metrics",
+            "Reviewer Stats"
+        ]
+    },
+    "⚙️ Settings": {
+        "page": "settings",
+        "submenu": [
+            "User Preferences",
+            "Export/Import",
+            "System Logs"
+        ]
+    }
+}
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
 ```
 
-**Edit a file directly in GitHub**
+Git Repo https://github.com/ellaquan-ihealth/rubricmanager
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+```jsx
+Scaffolded folder Design 
+rubric-manager/
+│
+├── frontend/                  # React or Next.js frontend
+│   ├── public/                # Static assets
+│   ├── src/
+│   │   ├── components/        # Reusable UI components (Table, Dropdown, Modal)
+│   │   ├── pages/             # Page routes (e.g., index.tsx, rubric/[id].tsx)
+│   │   ├── lib/               # Frontend utilities (API client, helper funcs)
+│   │   ├── types/             # TypeScript types/interfaces for rubric schema
+│   │   └── styles/            # Tailwind or CSS modules
+│   ├── .env.local             # API URL, auth keys
+│   └── package.json
+│
+├── backend/
+│   ├── app/
+│   │   ├── api/               # FastAPI routes
+│   │   │   ├── rubric.py      # /rubrics endpoint (CRUD)
+│   │   │   └── auth.py
+│   │   ├── core/              # Core configs
+│   │   │   └── settings.py    # env vars, config loader
+│   │   ├── db/                # Database setup
+│   │   │   ├── base.py
+│   │   │   └── models.py      # Rubric, User, Label models
+│   │   ├── schemas/           # Pydantic schemas (request/response validation)
+│   │   ├── services/          # Business logic (versioning, filtering)
+│   │   └── main.py            # FastAPI app entrypoint
+│   ├── .env
+│   └── requirements.txt
+│
+├── prisma/ or alembic/        # DB migrations (Prisma or Alembic/SQLAlchemy)
+│
+├── docs/                      # API docs or rubric design specs
+│
+├── scripts/                   # Optional CLI tools for rubric import/export
+│
+└── README.md
 
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/964fc3d0-5331-4a50-9dc7-549a1b600cbe) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+```
