@@ -34,20 +34,28 @@ Product Requirement Document for Rubric Manager
 
 ```jsx
 sidebar_navigation = {
-    "🏠 Home": {
+    " Home": {
         "page": "home",
         "submenu": None
     },
-    "📚 Rubrics": {
+    "Rubrics": {
         "page": "rubrics",
         "submenu": [
-            "Browse All",
+            "Browse All Rubics",
             "My Rubrics",
             "Create New",
+            "Review Submission",
             "Archived"
         ]
     },
-    "🧪 Test Cases": {
+    "Benchmark Cases": {
+        "page": "cases",
+        "submenu": [
+             "Browse All Cases",
+            "Versioning & Audits"
+        ]
+    },
+    "Test Cases": {
         "page": "test_cases",
         "submenu": [
             "Run LLM Evaluation",
@@ -55,15 +63,7 @@ sidebar_navigation = {
             "Manage Test Sets"
         ]
     },
-    "🧠 Criteria & Logic": {
-        "page": "criteria_logic",
-        "submenu": [
-            "Rule Builder",
-            "LLM Suggestions",
-            "Versioning & Audits"
-        ]
-    },
-    "📈 Analytics": {
+    "Analytics": {
         "page": "analytics",
         "submenu": [
             "Performance Trends",
@@ -71,7 +71,7 @@ sidebar_navigation = {
             "Reviewer Stats"
         ]
     },
-    "⚙️ Settings": {
+    "Settings": {
         "page": "settings",
         "submenu": [
             "User Preferences",
@@ -84,44 +84,30 @@ sidebar_navigation = {
 ```
 
 Git Repo https://github.com/ellaquan-ihealth/rubricmanager
+1. Clone the repo
+```bash
+git clone https://github.com/ellaquan-ihealth/rubric-manager.git
+cd rubric-manager
+```
+2. Install dependencies
+```bash
+npm install
+```
+3. Start the app locally
+```bash
+npm run dev
+```
+App will be available at: http://localhost:8080
 
-```jsx
-Scaffolded folder Design 
-rubric-manager/
-│
-├── frontend/                  # React or Next.js frontend
-│   ├── public/                # Static assets
-│   ├── src/
-│   │   ├── components/        # Reusable UI components (Table, Dropdown, Modal)
-│   │   ├── pages/             # Page routes (e.g., index.tsx, rubric/[id].tsx)
-│   │   ├── lib/               # Frontend utilities (API client, helper funcs)
-│   │   ├── types/             # TypeScript types/interfaces for rubric schema
-│   │   └── styles/            # Tailwind or CSS modules
-│   ├── .env.local             # API URL, auth keys
-│   └── package.json
-│
-├── backend/
-│   ├── app/
-│   │   ├── api/               # FastAPI routes
-│   │   │   ├── rubric.py      # /rubrics endpoint (CRUD)
-│   │   │   └── auth.py
-│   │   ├── core/              # Core configs
-│   │   │   └── settings.py    # env vars, config loader
-│   │   ├── db/                # Database setup
-│   │   │   ├── base.py
-│   │   │   └── models.py      # Rubric, User, Label models
-│   │   ├── schemas/           # Pydantic schemas (request/response validation)
-│   │   ├── services/          # Business logic (versioning, filtering)
-│   │   └── main.py            # FastAPI app entrypoint
-│   ├── .env
-│   └── requirements.txt
-│
-├── prisma/ or alembic/        # DB migrations (Prisma or Alembic/SQLAlchemy)
-│
-├── docs/                      # API docs or rubric design specs
-│
-├── scripts/                   # Optional CLI tools for rubric import/export
-│
-└── README.md
 
+## 📁 Folder Structure
+
+```bash
+/src
+  ├── components       # UI components (cards, buttons, layout, etc.)
+  ├── context          # Global state for rubrics (RubricProvider)
+  ├── pages
+  │   └── rubrics      # BrowseAll.tsx, RubricsLayout.tsx, etc.
+  ├── styles           # Global CSS (e.g., Tailwind config)
+  └── utils            # CSV parsing, filtering, etc.
 ```
