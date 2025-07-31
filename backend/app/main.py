@@ -8,7 +8,8 @@ app = FastAPI(title="rubric manager backend")
 
 # add origins for frontend, otherwise FE can't call APIs
 origins = [
-    "http://localhost:3000"
+    "http://localhost:3000", # next
+    "http://localhost:8080" # vite
     # "*"
 ]
 
