@@ -85,43 +85,14 @@ sidebar_navigation = {
 
 Git Repo https://github.com/ellaquan-ihealth/rubricmanager
 
-```jsx
-Scaffolded folder Design 
-rubric-manager/
-│
-├── frontend/                  # React or Next.js frontend
-│   ├── public/                # Static assets
-│   ├── src/
-│   │   ├── components/        # Reusable UI components (Table, Dropdown, Modal)
-│   │   ├── pages/             # Page routes (e.g., index.tsx, rubric/[id].tsx)
-│   │   ├── lib/               # Frontend utilities (API client, helper funcs)
-│   │   ├── types/             # TypeScript types/interfaces for rubric schema
-│   │   └── styles/            # Tailwind or CSS modules
-│   ├── .env.local             # API URL, auth keys
-│   └── package.json
-│
-├── backend/
-│   ├── app/
-│   │   ├── api/               # FastAPI routes
-│   │   │   ├── rubric.py      # /rubrics endpoint (CRUD)
-│   │   │   └── auth.py
-│   │   ├── core/              # Core configs
-│   │   │   └── settings.py    # env vars, config loader
-│   │   ├── db/                # Database setup
-│   │   │   ├── base.py
-│   │   │   └── models.py      # Rubric, User, Label models
-│   │   ├── schemas/           # Pydantic schemas (request/response validation)
-│   │   ├── services/          # Business logic (versioning, filtering)
-│   │   └── main.py            # FastAPI app entrypoint
-│   ├── .env
-│   └── requirements.txt
-│
-├── prisma/ or alembic/        # DB migrations (Prisma or Alembic/SQLAlchemy)
-│
-├── docs/                      # API docs or rubric design specs
-│
-├── scripts/                   # Optional CLI tools for rubric import/export
-│
-└── README.md
+## 📁 Folder Structure
 
+```bash
+/src
+  ├── components       # UI components (cards, buttons, layout, etc.)
+  ├── context          # Global state for rubrics (RubricProvider)
+  ├── pages
+  │   └── rubrics      # BrowseAll.tsx, RubricsLayout.tsx, etc.
+  ├── styles           # Global CSS (e.g., Tailwind config)
+  └── utils            # CSV parsing, filtering, etc.
 ```
