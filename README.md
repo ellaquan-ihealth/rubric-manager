@@ -34,20 +34,28 @@ Product Requirement Document for Rubric Manager
 
 ```jsx
 sidebar_navigation = {
-    "🏠 Home": {
+    " Home": {
         "page": "home",
         "submenu": None
     },
-    "📚 Rubrics": {
+    "Rubrics": {
         "page": "rubrics",
         "submenu": [
-            "Browse All",
+            "Browse All Rubics",
             "My Rubrics",
             "Create New",
+            "Review Submission",
             "Archived"
         ]
     },
-    "🧪 Test Cases": {
+    "Benchmark Cases": {
+        "page": "cases",
+        "submenu": [
+             "Browse All Cases",
+            "Versioning & Audits"
+        ]
+    },
+    "Test Cases": {
         "page": "test_cases",
         "submenu": [
             "Run LLM Evaluation",
@@ -55,15 +63,7 @@ sidebar_navigation = {
             "Manage Test Sets"
         ]
     },
-    "🧠 Criteria & Logic": {
-        "page": "criteria_logic",
-        "submenu": [
-            "Rule Builder",
-            "LLM Suggestions",
-            "Versioning & Audits"
-        ]
-    },
-    "📈 Analytics": {
+    "Analytics": {
         "page": "analytics",
         "submenu": [
             "Performance Trends",
@@ -71,7 +71,7 @@ sidebar_navigation = {
             "Reviewer Stats"
         ]
     },
-    "⚙️ Settings": {
+    "Settings": {
         "page": "settings",
         "submenu": [
             "User Preferences",
@@ -84,6 +84,21 @@ sidebar_navigation = {
 ```
 
 Git Repo https://github.com/ellaquan-ihealth/rubricmanager
+1. Clone the repo
+```bash
+git clone https://github.com/ellaquan-ihealth/rubric-manager.git
+cd rubric-manager
+```
+2. Install dependencies
+```bash
+npm install
+```
+3. Start the app locally
+```bash
+npm run dev
+```
+App will be available at: http://localhost:8080
+
 
 ## 📁 Folder Structure
 
