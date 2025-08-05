@@ -82,47 +82,108 @@ export default function BrowseAll() {
     return colors[colorKey] || "bg-neutral-50 text-neutral-700 border-neutral-200";
   };
 
+  // useEffect(() => {
+  //   fetch("/api/rubrics.csv")
+  //     .then((res) => res.text())
+  //     .then((text) => {
+  //       const parsed = Papa.parse(text, { header: true, skipEmptyLines: true });
+  //       const output = [];
+  //       let idCounter = 1;
+
+  //       parsed.data.forEach((row: any) => {
+  //         const Domain = row["Domain"];
+  //         const SubDomain = row["SubDomain"];
+  //         const Category = row["Category/Scenario"];
+  //         const RubricText = row["Case-Specific Criteria/Rubrics - Human Expert"];
+
+  //         const matches = RubricText?.match(/(SAFETY|RELEVANCY|TRUSTWORTHINESS)([\s\S]*?)(?=(SAFETY|RELEVANCY|TRUSTWORTHINESS|$))/gi);
+  //         matches?.forEach((section: string) => {
+  //           const lines = section.split("\n").slice(1).map((l) => l.trim()).filter(Boolean);
+  //           lines.forEach((line) => {
+  //             output.push({
+  //               id: idCounter++,
+  //               name: line.replace(/^\d+\.\s*/, ""),
+  //               domain: Domain?.trim(),
+  //               subdomain: SubDomain?.trim(),
+  //               category: Category?.trim(),
+  //             });
+  //           });
+  //         });
+  //       });
+
+  //       setRubrics(output);
+  //       setAllRubrics(output); // store full copy
+        
+  //       // Extract unique values for filters
+  //       const domains = [...new Set(output.map(r => r.domain).filter(Boolean).map(d => d.trim()))];
+  //       const subdomains = [...new Set(output.map(r => r.subdomain).filter(Boolean).map(s => s.trim()))];
+  //       const categories = [...new Set(output.map(r => r.category).filter(Boolean).map(c => c.trim()))];
+        
+  //       setAvailableDomains(domains.sort());
+  //       setAvailableSubdomains(subdomains.sort());
+  //       setAvailableCategories(categories.sort());
+  //     });
+  // }, []);
+
   useEffect(() => {
-    fetch("/api/rubrics.csv")
-      .then((res) => res.text())
-      .then((text) => {
-        const parsed = Papa.parse(text, { header: true, skipEmptyLines: true });
-        const output = [];
-        let idCounter = 1;
+    const testData = {
+      name: "test from js",
+      description: "if this works, that would be so cool",
+      domain: "DM",
+      sub_domain: "Lifestyle",
+      scenario: "Safety",
+      weight: 1,
+      created_by: "16f7_DM_01",
+      is_public: 1,
+      usage_count: 123
+    }
 
-        parsed.data.forEach((row: any) => {
-          const Domain = row["Domain"];
-          const SubDomain = row["SubDomain"];
-          const Category = row["Category/Scenario"];
-          const RubricText = row["Case-Specific Criteria/Rubrics - Human Expert"];
+    fetch(`http://0.0.0.0:8000/insert_one_to_table`, {
+      method: "post",
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(testData)
+    })
+    .then((res) => res.json())
+    .then((result) => console.log(result));
 
-          const matches = RubricText?.match(/(SAFETY|RELEVANCY|TRUSTWORTHINESS)([\s\S]*?)(?=(SAFETY|RELEVANCY|TRUSTWORTHINESS|$))/gi);
-          matches?.forEach((section: string) => {
-            const lines = section.split("\n").slice(1).map((l) => l.trim()).filter(Boolean);
-            lines.forEach((line) => {
-              output.push({
-                id: idCounter++,
-                name: line.replace(/^\d+\.\s*/, ""),
-                domain: Domain?.trim(),
-                subdomain: SubDomain?.trim(),
-                category: Category?.trim(),
-              });
-            });
-          });
+    const requestData = {
+      num_rubrics: 5
+    }
+
+    fetch(`http://0.0.0.0:8000/fetch_recent_rubrics`, {
+      method: "post",
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(requestData)
+    })
+    .then((res) => res.json())
+    .then((rubrics) => {
+      const output = [];
+
+      rubrics["rubrics"].forEach(rubric => {
+        output.push({
+          id: rubric[0],
+          name: rubric[1],
+          domain: rubric[3],
+          subdomain: rubric[4],
+          category: rubric[5],
         });
-
-        setRubrics(output);
-        setAllRubrics(output); // store full copy
-        
-        // Extract unique values for filters
-        const domains = [...new Set(output.map(r => r.domain).filter(Boolean).map(d => d.trim()))];
-        const subdomains = [...new Set(output.map(r => r.subdomain).filter(Boolean).map(s => s.trim()))];
-        const categories = [...new Set(output.map(r => r.category).filter(Boolean).map(c => c.trim()))];
-        
-        setAvailableDomains(domains.sort());
-        setAvailableSubdomains(subdomains.sort());
-        setAvailableCategories(categories.sort());
       });
+      setRubrics(output);
+      setAllRubrics(output); // store full copy
+
+      // Extract unique values for filters
+      const domains = [...new Set(output.map(r => r.domain).filter(Boolean).map(d => d.trim()))];
+      const subdomains = [...new Set(output.map(r => r.subdomain).filter(Boolean).map(s => s.trim()))];
+      const categories = [...new Set(output.map(r => r.category).filter(Boolean).map(c => c.trim()))];
+      
+      setAvailableDomains(domains.sort());
+      setAvailableSubdomains(subdomains.sort());
+      setAvailableCategories(categories.sort());
+    })
   }, []);
 
   const handleSearch = () => {
